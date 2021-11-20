@@ -1,0 +1,39 @@
+﻿@model List<Borrower>
+@{
+    ViewBag.Title = "Borrower Manager";
+
+}
+
+<!--
+    Original Author: Luke Chulack
+    Date Created:  11/12/2021
+    Version: 1.0
+    Date Last Modified: 11/12/2021
+    Modified by: Luke Chulack
+    Modification log:
+
+           version 1.0 -  11/12/2021  -  Borrower view which builds the table that displays the Borrower data.
+
+    -->
+<h1>@ViewBag.title</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Borrower ID</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Borrower Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var borrower in Model)
+        {
+            <tr>
+                <td>@borrower.BorrowerId</td>
+                <td>@borrower.Lname</td>
+                <td>@borrower.Fname</td>
+                <td>@borrower.BorrowerPhoneNum</td>
+            </tr>
+        }
+    </tbody>
+</table>
