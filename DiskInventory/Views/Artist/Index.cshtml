@@ -6,15 +6,17 @@
 <!--
     Original Author: Luke Chulack
     Date Created:  11/12/2021
-    Version: 1.0
-    Date Last Modified: 11/12/2021
+    Version: 2.0
+    Date Last Modified: 11/19/2021
     Modified by: Luke Chulack
     Modification log:
 
            version 1.0 -  11/12/2021  -  Artist view which builds the table that displays the Artist data.
+           version 2.0 -  11/19/2021  -  Added an add, edit, and delete button for the Artist data in the table.
 
     -->
 <h1>@ViewBag.title</h1>
+<a asp-controller="Artist" asp-action="Add">Add an Artist</a>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -32,6 +34,13 @@
                 <td>@artist.ArtistLname</td>
                 <td>@artist.ArtistFname</td>
                 <td>@artist.ArtistTypeId</td>
+                <td>
+                    <a asp-controller="Artist" asp-action="Edit" asp-route-id="@artist.ArtistId">Edit</a>
+
+
+
+                </td>
+                <td><a asp-controller="Artist" asp-action="Delete" asp-route-id="@artist.ArtistId">Delete</a></td>
             </tr>
         }
     </tbody>
