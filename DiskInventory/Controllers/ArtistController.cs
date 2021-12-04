@@ -7,13 +7,15 @@ using DiskInventory.Models;
 
 /*
     Original Author: Luke Chulack                         
-    Date Created:  11/12/2021                                     
-    Version: 1.0                                           
+    Date Created:  11/19/2021                                     
+    Version: 2.0                                           
     Date Last Modified: 11/12/2021                               
     Modified by: Luke Chulack                                          
     Modification log: 
 
            version 1.0 -  11/12/2021  - Built the Artist Controller which links to the view in the Artist view folder
+           version 2.0 -  11/12/2021  - Added the logic for the add, edit and delete buttons in the artist view;
+
  
  */
 
@@ -35,5 +37,65 @@ namespace DiskInventory.Controllers
             List<Artist> artists = context.Artists.OrderBy(a => a.ArtistLname).ThenBy(a => a.ArtistFname).ToList();
             return View(artists);
         }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            ViewBag.Action = "Add";
+            ViewBag.ArtistTypes = context.ArtistTypes.OrderBy(t => t.Description).ToList();
+            return View("Edit", new Artist());
+        }
+        [HttpGet]
+        public IActionResult Edit(int id) // overloaded edit to get artist id
+        {
+            ViewBag.Action = "Edit";
+            ViewBag.ArtistTypes = context.ArtistTypes.OrderBy(t => t.Description).ToList();
+            var artist = context.Artists.Find(id);
+            return View(artist);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Artist artist)
+        {
+            if (ModelState.IsValid)
+            {
+                if (artist.ArtistId == 0) // add artist
+                {
+                    context.Artists.Add(artist);
+
+                } else // update artist
+                {
+                    context.Artists.Update(artist);
+                }
+                context.SaveChanges();
+                return RedirectToAction("Index", "Artist");
+
+            } else
+            {
+                ViewBag.Action = (artist.ArtistId == 0) ? "Add" : "Edit";
+                ViewBag.ArtistTypes = context.ArtistTypes.OrderBy(t => t.Description).ToList();
+                return View(artist);
+            }
+
+        }
+        [HttpGet]
+        public IActionResult Delete(int id) // gets id to delete
+        {
+            var artist = context.Artists.Find(id);
+            return View(artist);
+        }
+
+        [HttpPost]
+
+        public IActionResult Delete(Artist artist) // overload delete
+        {
+            context.Artists.Remove(artist);
+            context.SaveChanges();
+
+            return RedirectToAction("Index", "Artist");
+        }
+
     }
+
+
 }
