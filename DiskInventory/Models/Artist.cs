@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 #nullable disable
 
 namespace DiskInventory.Models
@@ -13,8 +13,11 @@ namespace DiskInventory.Models
         }
 
         public int ArtistId { get; set; }
+        [Required]
+
         public string ArtistFname { get; set; }
         public string ArtistLname { get; set; }
+        [Required]
         public int ArtistTypeId { get; set; }
 
         public virtual ArtistType ArtistType { get; set; }
